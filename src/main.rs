@@ -105,8 +105,19 @@ async fn main() -> Result<(), Box<dyn Error>> {
     println!("{}", ADDITIONAL_STYLES.magenta());
     info!("{}", "Starting Nyan Browser... (◕ᴗ◕✿)".cyan());
 
+    println!("Available themes:");
+    for (name, primary, secondary) in THEMES.iter() {
+        println!("{}: {} / {}", name, primary, secondary);
+    }
+
+    println!("\nAvailable mascots:");
+    for mascot in MASCOTS.iter() {
+        println!("{}", mascot.magenta());
+    }
+
     let config = config::BrowserConfig::default();
     let browser = browser::NyanBrowser::new(config).await?;
+    browser.navigate(DEFAULT_URL).await?;
 
     info!(
         "{}",
@@ -114,7 +125,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     ╭──────────────────────────────╮
     │   Browser-chan is ready!     │
     │   Let's explore! ✨          │
-    │      (◕‿◕✿) <3              │
+    │       (◕‿◕✿) <3              │
     ╰──────────────────────────────╯
     "#
         .magenta()

@@ -122,11 +122,38 @@ impl KawaiiLogger {
     }
 
     pub fn log_info(&self, message: &str) {
+        if let Ok(mut metrics) = self.metrics.write() {
+            metrics.increment_info();
+        }
         println!("\r{} {}", "(◕‿◕)✧".bright_cyan(), message);
+    }
+
+    pub fn log_error(&self, message: &str) {
+        if let Ok(mut metrics) = self.metrics.write() {
+            metrics.increment_error();
+        }
+        println!("\r{} {}", "(╥﹏╥)".bright_red(), message);
+    }
+
+    pub fn log_warn(&self, message: &str) {
+        if let Ok(mut metrics) = self.metrics.write() {
+            metrics.increment_warn();
+        }
+        println!("\r{} {}", "(｡•́︿•̀｡)".yellow(), message);
     }
 
     pub fn log_success(&self, message: &str) {
         println!("\r{} {}", "٩(◕‿◕｡)۶".bright_green(), message);
+    }
+
+    pub fn print_metrics(&self) {
+        if let Ok(metrics) = self.metrics.read() {
+            let (info, error, warn) = metrics.get_stats();
+            println!("📊 Logging Stats (◕‿◕✿)");
+            println!("ℹ️ Info: {}", info);
+            println!("❌ Errors: {}", error);
+            println!("⚠️ Warnings: {}", warn);
+        }
     }
 }
 
@@ -136,6 +163,24 @@ struct LogMetrics {
     info_count: usize,
     error_count: usize,
     warn_count: usize,
+}
+
+impl LogMetrics {
+    pub fn increment_info(&mut self) {
+        self.info_count += 1;
+    }
+
+    pub fn increment_error(&mut self) {
+        self.error_count += 1;
+    }
+
+    pub fn increment_warn(&mut self) {
+        self.warn_count += 1;
+    }
+
+    pub fn get_stats(&self) -> (usize, usize, usize) {
+        (self.info_count, self.error_count, self.warn_count)
+    }
 }
 
 pub struct KawaiiSpinner {

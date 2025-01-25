@@ -2,9 +2,9 @@ use crate::{
     config::BrowserConfig,
     constants::templates::{CUSTOM_HEADER, DEFAULT_PAGE},
     core::BrowserCache,
-    features::network::NetworkMonitor,
+    features::network::{monitor::RequestData, NetworkMonitor},
 };
-use anyhow::{Context, Result};
+use anyhow::Result;
 use colored::*;
 use fantoccini::{Client, ClientBuilder};
 use log::{error, info};
@@ -222,6 +222,18 @@ impl NyanBrowser {
             )
             .await?;
         Ok(())
+    }
+
+    pub async fn get_cached_page(&self, url: &str) -> Option<Vec<u8>> {
+        self.cache.get_page(url).await
+    }
+
+    pub async fn monitor_network(&self, request: RequestData) -> anyhow::Result<()> {
+        self.network.intercept_request(request).await
+    }
+
+    pub fn get_config(&self) -> impl std::ops::Deref<Target = BrowserConfig> + '_ {
+        self.config.read()
     }
 }
 

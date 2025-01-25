@@ -94,7 +94,7 @@ impl TestRunner {
 
     pub async fn validate_page(
         &self,
-        rules: &ValidationRules,
+        _rules: &ValidationRules,
     ) -> Result<ValidationReport, Box<dyn Error>> {
         todo!()
     }

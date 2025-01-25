@@ -1,7 +1,7 @@
 use parking_lot::RwLock as ParkingRwLock;
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
-use tracing::{error, info};
+use tracing::info;
 
 pub struct NetworkMonitor {
     requests: Arc<ParkingRwLock<Vec<RequestData>>>,

@@ -6,6 +6,7 @@ touch src/browser.py
 mkdir -p src/resources/icons
 mkdir -p src/resources/html
 mkdir -p src/resources/icons/svg
+mkdir -p src/resources/images
 
 # Create and activate a virtual environment
 python3 -m venv venv

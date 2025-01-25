@@ -1,11 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="light">
 
 <head>
     <title>Nyan Browser Home</title>
     <style>
+        :root[data-theme="light"] {
+            --bg-primary: linear-gradient(to right, #ff99cc, #9999ff);
+            --text-primary: #333333;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-shadow: rgba(0, 0, 0, 0.1);
+            --link-color: #ff66aa;
+            --search-bg: #ffffff;
+        }
+
+        :root[data-theme="dark"] {
+            --bg-primary: linear-gradient(to right, #660033, #000066);
+            --text-primary: #ffffff;
+            --card-bg: rgba(40, 40, 40, 0.8);
+            --card-shadow: rgba(0, 0, 0, 0.3);
+            --link-color: #ff99cc;
+            --search-bg: #333333;
+        }
+
         body {
-            background: linear-gradient(to right, #ff99cc, #9999ff);
+            background: var(--bg-primary);
+            color: var(--text-primary);
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 20px;
@@ -26,6 +45,8 @@
             margin: 20px 0;
             font-size: 16px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: var(--search-bg);
+            color: var(--text-primary);
         }
 
         .nyan-cat {
@@ -57,18 +78,18 @@
         }
 
         .quick-link {
-            background: rgba(255, 255, 255, 0.8);
+            background: var(--card-bg);
             padding: 15px;
             border-radius: 15px;
             text-decoration: none;
-            color: #ff66aa;
+            color: var(--link-color);
             transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px var(--card-shadow);
         }
 
         .quick-link:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px var(--card-shadow);
         }
 
         .search-box:focus {
@@ -76,12 +97,81 @@
             box-shadow: 0 0 20px rgba(255, 153, 204, 0.3);
             outline: none;
         }
+
+        .logo-container {
+            margin: 40px auto;
+            position: relative;
+        }
+
+        .logo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(255, 153, 204, 0.5);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .paw-print {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            opacity: 0.6;
+            animation: fade 2s infinite;
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .paw-1 {
+            top: -20px;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .paw-2 {
+            top: 40px;
+            right: 10%;
+            animation-delay: 0.5s;
+        }
+
+        .paw-3 {
+            bottom: -10px;
+            left: 30%;
+            animation-delay: 1s;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <img src="../icons/svg/nyan-cat.svg" class="nyan-cat">
+        <div class="logo-container">
+            <img src="../images/nyan-logo.svg" class="logo" alt="Nyan Browser">
+        </div>
         <form action="https://www.google.com/search" method="get">
             <input type="text" name="q" class="search-box" placeholder="Search with Nyan...">
         </form>

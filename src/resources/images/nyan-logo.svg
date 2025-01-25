@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .cat-girl { fill: #ff99cc; }
+    .paw { fill: #ff99cc; opacity: 0.6; }
+  </style>
+  <image href="data:image/png;base64,..." width="512" height="512"/>
+</svg>

@@ -1,11 +1,18 @@
-use crate::config::BrowserConfig;
-use crate::constants::templates::{CUSTOM_HEADER, DEFAULT_PAGE};
+use crate::{
+    config::BrowserConfig,
+    constants::templates::{CUSTOM_HEADER, DEFAULT_PAGE},
+    core::BrowserCache,
+    features::network::NetworkMonitor,
+};
+use anyhow::{Context, Result};
 use colored::*;
 use fantoccini::{Client, ClientBuilder};
 use log::{error, info};
+use parking_lot::RwLock;
 use serde_json::json;
 use std::error::Error;
 use std::net::TcpStream;
+use std::num::NonZeroUsize;
 use std::process::{Child, Command};
 use std::sync::Arc;
 use std::time::Duration;
@@ -15,23 +22,26 @@ pub struct NyanBrowser {
     client: Arc<Client>,
     driver: Child,
     port: u16,
+    cache: Arc<BrowserCache>,
+    network: Arc<NetworkMonitor>,
+    config: Arc<RwLock<BrowserConfig>>,
 }
 
 impl NyanBrowser {
-    async fn find_available_port() -> Result<u16, Box<dyn Error>> {
+    async fn find_available_port() -> Result<u16> {
         for port in 4444..5000 {
             if TcpStream::connect(format!("127.0.0.1:{}", port)).is_err() {
                 return Ok(port);
             }
             sleep(Duration::from_millis(100)).await;
         }
-        Err("No available ports found".into())
+        Err(anyhow::anyhow!("No available ports found"))
     }
 
     async fn create_client(
         port: u16,
         caps: serde_json::Map<String, serde_json::Value>,
-    ) -> Result<Client, Box<dyn Error>> {
+    ) -> Result<Client> {
         let mut attempts = 0;
         let max_attempts = 3;
 
@@ -45,7 +55,7 @@ impl NyanBrowser {
                 Err(e) => {
                     attempts += 1;
                     if attempts == max_attempts {
-                        return Err(Box::new(e));
+                        return Err(anyhow::anyhow!("Failed to connect: {}", e));
                     }
                     error!(
                         "Connection attempt {}/{} failed: {}",
@@ -55,10 +65,12 @@ impl NyanBrowser {
                 }
             }
         }
-        Err("Failed to create client after max attempts".into())
+        Err(anyhow::anyhow!(
+            "Failed to create client after max attempts"
+        ))
     }
 
-    pub async fn new(config: BrowserConfig) -> Result<Self, Box<dyn Error>> {
+    pub async fn new(config: BrowserConfig) -> Result<Self> {
         info!("{}", "Starting Nyan Browser... (◕ᴗ◕✿)".cyan());
 
         let port = Self::find_available_port().await?;
@@ -124,6 +136,12 @@ impl NyanBrowser {
             client,
             driver,
             port,
+            cache: Arc::new(BrowserCache::new(
+                NonZeroUsize::new(config.cache_size_mb * 1024 * 1024).unwrap(),
+                NonZeroUsize::new(config.cache_size_mb * 512 * 1024).unwrap(),
+            )),
+            network: Arc::new(NetworkMonitor::new()),
+            config: Arc::new(RwLock::new(config)),
         })
     }
 
@@ -216,11 +234,10 @@ impl Drop for NyanBrowser {
 
         if let Ok(rt) = tokio::runtime::Runtime::new() {
             rt.block_on(async {
-                // Create a new client instance for cleanup
-                let client = Arc::try_unwrap(client)
-                    .unwrap_or_else(|_| panic!("Failed to get exclusive ownership of client"));
-                if let Err(e) = client.close().await {
-                    error!("Error closing browser session: {}", e);
+                if let Ok(client) = Arc::try_unwrap(client) {
+                    if let Err(e) = client.close().await {
+                        error!("Error closing browser session: {}", e);
+                    }
                 }
             });
         }

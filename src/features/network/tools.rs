@@ -6,12 +6,15 @@ pub struct NetworkTools;
 impl NetworkTools {
     pub async fn modify_headers(
         &mut self,
-        headers: HeaderModifications,
+        _headers: HeaderModifications,
     ) -> Result<(), Box<dyn Error>> {
         todo!()
     }
 
-    pub async fn mock_responses(&mut self, mocks: Vec<MockResponse>) -> Result<(), Box<dyn Error>> {
+    pub async fn mock_responses(
+        &mut self,
+        _mocks: Vec<MockResponse>,
+    ) -> Result<(), Box<dyn Error>> {
         todo!()
     }
 }

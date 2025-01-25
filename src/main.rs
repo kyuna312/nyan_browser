@@ -88,6 +88,21 @@ const ADDITIONAL_STYLES: &str = r#"
 async fn main() -> Result<(), Box<dyn Error>> {
     env_logger::init();
 
+    println!("{}", KAWAII_BANNER.magenta());
+    println!("{}", GECKO_BANNER.magenta());
+    println!("{}", GOODBYE_BANNER.magenta());
+    for frame in LOADING_FRAMES.iter() {
+        println!("{}", frame.magenta());
+    }
+    for theme in THEME_NAMES.iter() {
+        println!("{}", theme.magenta());
+    }
+    for msg in KAWAII_MESSAGES.iter() {
+        println!("{}", msg.magenta());
+    }
+    println!("{}", BROWSER_TITLE.magenta());
+    println!("{}", KAWAII_HEADER.magenta());
+    println!("{}", ADDITIONAL_STYLES.magenta());
     info!("{}", "Starting Nyan Browser... (◕ᴗ◕✿)".cyan());
 
     let config = config::BrowserConfig::default();

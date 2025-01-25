@@ -137,8 +137,8 @@ impl NyanBrowser {
             driver,
             port,
             cache: Arc::new(BrowserCache::new(
-                NonZeroUsize::new(config.cache_size_mb * 1024 * 1024).unwrap(),
-                NonZeroUsize::new(config.cache_size_mb * 512 * 1024).unwrap(),
+                NonZeroUsize::new((config.cache_size_mb as usize) * 1024 * 1024).unwrap(),
+                NonZeroUsize::new((config.cache_size_mb as usize) * 512 * 1024).unwrap(),
             )),
             network: Arc::new(NetworkMonitor::new()),
             config: Arc::new(RwLock::new(config)),

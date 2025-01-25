@@ -10,14 +10,10 @@ pub struct BrowserCache {
 }
 
 impl BrowserCache {
-    pub fn new(page_size: usize, asset_size: usize) -> Self {
+    pub fn new(page_size: NonZeroUsize, asset_size: NonZeroUsize) -> Self {
         Self {
-            page_cache: Arc::new(RwLock::new(LruCache::new(
-                NonZeroUsize::new(page_size).unwrap(),
-            ))),
-            asset_cache: Arc::new(RwLock::new(LruCache::new(
-                NonZeroUsize::new(asset_size).unwrap(),
-            ))),
+            page_cache: Arc::new(RwLock::new(LruCache::new(page_size))),
+            asset_cache: Arc::new(RwLock::new(LruCache::new(asset_size))),
         }
     }
 
@@ -31,6 +27,16 @@ impl BrowserCache {
         let mut cache = self.page_cache.write().await;
         cache.put(url.to_string(), content);
         Ok(())
+    }
+
+    pub async fn get_asset(&self, url: &str) -> Option<Vec<u8>> {
+        let mut cache = self.asset_cache.write().await;
+        cache.get(url).cloned()
+    }
+
+    pub async fn store_asset(&self, url: &str, content: Vec<u8>) {
+        let mut cache = self.asset_cache.write().await;
+        cache.put(url.to_string(), content);
     }
 }
 

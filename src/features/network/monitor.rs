@@ -1,8 +1,6 @@
 use parking_lot::RwLock as ParkingRwLock;
 use serde::{Deserialize, Serialize};
-use std::error::Error;
 use std::sync::Arc;
-use tokio::sync::RwLock;
 use tracing::{error, info};
 
 pub struct NetworkMonitor {

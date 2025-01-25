@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Nyan Browser Home</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #ff99cc, #9999ff);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .search-box {
+            width: 80%;
+            padding: 15px;
+            border-radius: 25px;
+            border: none;
+            margin: 20px 0;
+            font-size: 16px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nyan-cat {
+            width: 300px;
+            margin: 20px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .quick-link {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 15px;
+            text-decoration: none;
+            color: #ff66aa;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .quick-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-box:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(255, 153, 204, 0.3);
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="../icons/svg/nyan-cat.svg" class="nyan-cat">
+        <form action="https://www.google.com/search" method="get">
+            <input type="text" name="q" class="search-box" placeholder="Search with Nyan...">
+        </form>
+        <div class="quick-links">
+            <a href="https://github.com" class="quick-link">GitHub</a>
+            <a href="https://youtube.com" class="quick-link">YouTube</a>
+            <a href="https://reddit.com" class="quick-link">Reddit</a>
+            <a href="https://twitter.com" class="quick-link">Twitter</a>
+        </div>
+    </div>
+</body>
+
+</html>

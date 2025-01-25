@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+    @keyframes rainbow {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-20px); }
+    }
+    @keyframes sparkle {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    @keyframes tail-wave {
+      0% { transform: rotate(0deg); }
+      50% { transform: rotate(-10deg); }
+      100% { transform: rotate(0deg); }
+    }
+    .cat-body { animation: float 3s ease-in-out infinite; }
+    .rainbow { animation: rainbow 0.5s linear infinite; }
+    .sparkle { animation: sparkle 2s infinite; }
+    .tail { animation: tail-wave 2s infinite; transform-origin: 220 120; }
+    .cat-face { fill: #ffccff; }
+    .cat-ear { fill: #ff99cc; }
+    .blush { fill: #ffb3b3; opacity: 0.6; }
+    .rainbow-1 { fill: #ff0000; }
+    .rainbow-2 { fill: #ff9900; }
+    .rainbow-3 { fill: #ffff00; }
+    .rainbow-4 { fill: #33ff00; }
+    .rainbow-5 { fill: #0099ff; }
+    .rainbow-6 { fill: #6633ff; }
+  </style>
+
+  <g class="rainbow">
+    <rect class="rainbow-1" x="20" y="80" width="200" height="20"/>
+    <rect class="rainbow-2" x="20" y="100" width="200" height="20"/>
+    <rect class="rainbow-3" x="20" y="120" width="200" height="20"/>
+    <rect class="rainbow-4" x="20" y="140" width="200" height="20"/>
+    <rect class="rainbow-5" x="20" y="160" width="200" height="20"/>
+    <rect class="rainbow-6" x="20" y="180" width="200" height="20"/>
+  </g>
+
+  <g class="cat-body">
+    <path class="tail" d="M220,120 q-20,10 -30,0 t-20,0" stroke="#ff99cc" stroke-width="8" fill="none"/>
+    <path class="cat-face" d="M220,100 h40 v40 h-40 Z"/>
+    <path class="cat-ear" d="M220,90 l20,-20 l20,20"/>
+    <circle class="blush" cx="230" cy="125" r="5"/>
+    <circle class="blush" cx="250" cy="125" r="5"/>
+    <circle cx="235" cy="115" r="3" fill="black"/>
+    <circle cx="245" cy="115" r="3" fill="black"/>
+    <path d="M235,122 q5,3 10,0" fill="none" stroke="black" stroke-width="2"/>
+  </g>
+
+  <!-- Sparkles -->
+  <g class="sparkle" style="animation-delay: 0s">
+    <path d="M270,90 l5,-5 l-5,-5 l-5,5 z" fill="#fff"/>
+  </g>
+  <g class="sparkle" style="animation-delay: 0.5s">
+    <path d="M250,70 l5,-5 l-5,-5 l-5,5 z" fill="#fff"/>
+  </g>
+  <g class="sparkle" style="animation-delay: 1s">
+    <path d="M290,110 l5,-5 l-5,-5 l-5,5 z" fill="#fff"/>
+  </g>
+</svg>

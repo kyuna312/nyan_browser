@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    [data-theme="dark"] .dark-mode { display: block; }
+    [data-theme="dark"] .light-mode { display: none; }
+    .dark-mode { display: none; }
+  </style>
+  <g class="light-mode">
+    <image href="data:image/png;base64,..." width="32" height="32"/>
+  </g>
+  <g class="dark-mode">
+    <image href="data:image/png;base64,..." width="32" height="32" filter="brightness(0.9) contrast(1.1)"/>
+  </g>
+</svg>

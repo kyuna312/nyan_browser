@@ -101,40 +101,39 @@
         .logo-container {
             margin: 40px auto;
             position: relative;
+            width: 200px;
+            height: 200px;
         }
 
         .logo {
-            width: 200px;
-            height: 200px;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             box-shadow: 0 0 30px rgba(255, 153, 204, 0.5);
             animation: float 3s ease-in-out infinite;
+            transition: transform 0.3s ease-in-out;
         }
 
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-20px);
-            }
-
-            100% {
-                transform: translateY(0px);
-            }
+        .logo:hover {
+            transform: scale(1.1) rotate(5deg);
         }
 
-        .paw-print {
+        .hearts {
             position: absolute;
-            width: 30px;
-            height: 30px;
-            opacity: 0.6;
-            animation: fade 2s infinite;
+            pointer-events: none;
         }
 
-        @keyframes fade {
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            opacity: 0;
+            animation: floatHeart 3s ease-in-out infinite;
+        }
+
+        @keyframes floatHeart {
             0% {
+                transform: translateY(0) rotate(0deg);
                 opacity: 0;
             }
 
@@ -143,26 +142,142 @@
             }
 
             100% {
+                transform: translateY(-100px) rotate(360deg);
                 opacity: 0;
             }
         }
 
-        .paw-1 {
-            top: -20px;
-            left: 20%;
+        .heart:nth-child(1) {
+            left: -30px;
             animation-delay: 0s;
         }
 
-        .paw-2 {
-            top: 40px;
-            right: 10%;
+        .heart:nth-child(2) {
+            left: 30px;
             animation-delay: 0.5s;
         }
 
-        .paw-3 {
-            bottom: -10px;
-            left: 30%;
+        .heart:nth-child(3) {
+            right: -30px;
             animation-delay: 1s;
+        }
+
+        [data-theme="dark"] .logo {
+            box-shadow: 0 0 30px rgba(255, 102, 170, 0.3);
+        }
+
+        * {
+            transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+        }
+
+        .sparkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ffcc00;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: sparkleFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes sparkleFloat {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                opacity: 0;
+            }
+
+            50% {
+                transform: translate(var(--tx), var(--ty)) rotate(180deg) scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .cursor-trail.active {
+            opacity: 1;
+        }
+
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 10000;
+        }
+
+        .particle--paw {
+            width: 15px;
+            height: 15px;
+            background-image: url('../icons/svg/paw-particle.svg');
+            background-size: contain;
+        }
+
+        .particle--heart {
+            width: 12px;
+            height: 12px;
+            background-image: url('../icons/svg/heart-particle.svg');
+            background-size: contain;
+        }
+
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ff99cc;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            transform-origin: center;
+        }
+
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: #ff66aa;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.2s, height 0.2s;
+        }
+
+        .cursor-glow {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(255, 153, 204, 0.3) 0%, rgba(255, 153, 204, 0) 70%);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        [data-theme="dark"] .cursor {
+            border-color: #ff66aa;
+        }
+
+        [data-theme="dark"] .cursor-dot {
+            background: #ff99cc;
+        }
+
+        .hover-effect {
+            transform: scale(1.5);
         }
     </style>
 </head>
@@ -171,6 +286,20 @@
     <div class="container">
         <div class="logo-container">
             <img src="../images/nyan-logo.svg" class="logo" alt="Nyan Browser">
+            <div class="hearts">
+                <svg class="heart" viewBox="0 0 32 32">
+                    <path fill="#ff66aa"
+                        d="M16,28 l-1.5,-1.5 a55,55 0 0,1 -10.5,-14 a6,6 0 1,1 12,-6 a6,6 0 1,1 12,6 a55,55 0 0,1 -10.5,14 z" />
+                </svg>
+                <svg class="heart" viewBox="0 0 32 32">
+                    <path fill="#ff66aa"
+                        d="M16,28 l-1.5,-1.5 a55,55 0 0,1 -10.5,-14 a6,6 0 1,1 12,-6 a6,6 0 1,1 12,6 a55,55 0 0,1 -10.5,14 z" />
+                </svg>
+                <svg class="heart" viewBox="0 0 32 32">
+                    <path fill="#ff66aa"
+                        d="M16,28 l-1.5,-1.5 a55,55 0 0,1 -10.5,-14 a6,6 0 1,1 12,-6 a6,6 0 1,1 12,6 a55,55 0 0,1 -10.5,14 z" />
+                </svg>
+            </div>
         </div>
         <form action="https://www.google.com/search" method="get">
             <input type="text" name="q" class="search-box" placeholder="Search with Nyan...">
@@ -182,6 +311,160 @@
             <a href="https://twitter.com" class="quick-link">Twitter</a>
         </div>
     </div>
+
+    <script>
+        // Create sparkles
+        const sparklesContainer = document.createElement('div');
+        sparklesContainer.className = 'sparkles';
+        document.body.appendChild(sparklesContainer);
+
+        for (let i = 0; i < 20; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.setProperty('--tx', `${Math.random() * 200 - 100}px`);
+            sparkle.style.setProperty('--ty', `${Math.random() * 200 - 100}px`);
+            sparkle.style.left = `${Math.random() * 100}%`;
+            sparkle.style.top = `${Math.random() * 100}%`;
+            sparkle.style.animationDelay = `${Math.random() * 3}s`;
+            sparklesContainer.appendChild(sparkle);
+        }
+
+        // Cursor trail effect
+        const trails = Array.from({ length: 10 }, () => {
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            document.body.appendChild(trail);
+            return trail;
+        });
+
+        let trailIndex = 0;
+        document.addEventListener('mousemove', (e) => {
+            const trail = trails[trailIndex];
+            trail.style.left = e.clientX - 10 + 'px';
+            trail.style.top = e.clientY - 10 + 'px';
+            trail.classList.add('active');
+            setTimeout(() => trail.classList.remove('active'), 500);
+            trailIndex = (trailIndex + 1) % trails.length;
+        });
+
+        // Custom cursor
+        const cursor = document.createElement('div');
+        const cursorDot = document.createElement('div');
+        const cursorGlow = document.createElement('div');
+        cursor.className = 'cursor';
+        cursorDot.className = 'cursor-dot';
+        cursorGlow.className = 'cursor-glow';
+        document.body.appendChild(cursor);
+        document.body.appendChild(cursorDot);
+        document.body.appendChild(cursorGlow);
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+            cursorDot.style.left = e.clientX - 3 + 'px';
+            cursorDot.style.top = e.clientY - 3 + 'px';
+            cursorGlow.style.left = e.clientX - 20 + 'px';
+            cursorGlow.style.top = e.clientY - 20 + 'px';
+        });
+
+        // Particle system
+        class ParticleSystem {
+            constructor() {
+                this.particles = new Set();
+                this.types = {
+                    paw: { image: '../icons/svg/paw-particle.svg', size: 15 },
+                    heart: { image: '../icons/svg/heart-particle.svg', size: 12 },
+                    star: { image: '../icons/svg/star-particle.svg', size: 10 },
+                    sparkle: { image: '../icons/svg/sparkle-particle.svg', size: 8 }
+                };
+                this.animate = this.animate.bind(this);
+                requestAnimationFrame(this.animate);
+            }
+
+            createParticle(x, y, type) {
+                const particle = {
+                    x, y,
+                    type,
+                    element: document.createElement('div'),
+                    velocity: {
+                        x: (Math.random() - 0.5) * 10,
+                        y: (Math.random() - 0.5) * 10 - 5
+                    },
+                    rotation: Math.random() * 360,
+                    rotationSpeed: (Math.random() - 0.5) * 10,
+                    lifetime: 1000,
+                    birth: Date.now()
+                };
+
+                const config = this.types[type];
+                particle.element.className = 'particle';
+                particle.element.style.cssText = `
+                    width: ${config.size}px;
+                    height: ${config.size}px;
+                    background-image: url(${config.image});
+                    position: fixed;
+                    pointer-events: none;
+                    z-index: 10000;
+                `;
+
+                document.body.appendChild(particle.element);
+                this.particles.add(particle);
+            }
+
+            animate() {
+                const now = Date.now();
+                for (const particle of this.particles) {
+                    const age = now - particle.birth;
+                    if (age >= particle.lifetime) {
+                        particle.element.remove();
+                        this.particles.delete(particle);
+                        continue;
+                    }
+
+                    const progress = age / particle.lifetime;
+                    particle.velocity.y += 0.2; // gravity
+                    particle.x += particle.velocity.x;
+                    particle.y += particle.velocity.y;
+                    particle.rotation += particle.rotationSpeed;
+
+                    particle.element.style.transform = `
+                        translate(${particle.x}px, ${particle.y}px)
+                        rotate(${particle.rotation}deg)
+                        scale(${1 - progress})
+                    `;
+                    particle.element.style.opacity = 1 - progress;
+                }
+
+                requestAnimationFrame(this.animate);
+            }
+        }
+
+        const particleSystem = new ParticleSystem();
+
+        // Enhanced click effect
+        document.addEventListener('click', (e) => {
+            const types = ['paw', 'heart', 'star', 'sparkle'];
+            for (let i = 0; i < 12; i++) {
+                const type = types[Math.floor(Math.random() * types.length)];
+                particleSystem.createParticle(e.clientX, e.clientY, type);
+            }
+        });
+
+        // Interactive elements
+        document.querySelectorAll('a, button, input').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover-effect');
+                cursorDot.style.width = '8px';
+                cursorDot.style.height = '8px';
+            });
+
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover-effect');
+                cursorDot.style.width = '6px';
+                cursorDot.style.height = '6px';
+            });
+        });
+    </script>
 </body>
 
 </html>

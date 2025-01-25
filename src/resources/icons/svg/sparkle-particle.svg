@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-  <path fill="#ffffff" d="M12,0 L14,10 L24,12 L14,14 L12,24 L10,14 L0,12 L10,10 Z">
-    <animate attributeName="fill" values="#ffcc00;#ffffff;#ffcc00" dur="1s" repeatCount="indefinite"/>
-  </path>
-</svg>

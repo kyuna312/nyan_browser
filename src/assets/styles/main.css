@@ -1,0 +1,39 @@
+:root {
+    --primary-color: #e91e63;
+    --secondary-color: #f48fb1;
+    --bg-gradient: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --animation-duration: 3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.kawaii-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: var(--bg-gradient);
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    padding: 20px;
+    will-change: transform;
+}
+
+.mascot {
+    width: 280px;
+    height: 280px;
+    background-image: url('../images/mascot.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: translateZ(0);
+    animation: float var(--animation-duration) ease-in-out infinite;
+    will-change: transform;
+}
+
+/* Rest of the CSS from DEFAULT_PAGE and CUSTOM_HEADER */

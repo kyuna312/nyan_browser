@@ -1,5 +1,7 @@
+pub mod adblock;
 pub mod anime;
 pub mod automation;
+pub mod battery_saver;
 pub mod capture;
 pub mod devtools;
 pub mod extensions;
@@ -7,4 +9,6 @@ pub mod network;
 pub mod performance;
 pub mod testing;
 pub mod themes;
+pub mod turbo;
+pub mod vpn;
 pub mod workspace;

@@ -19,3 +19,9 @@ pub enum BrowserError {
 }
 
 pub type Result<T> = std::result::Result<T, BrowserError>;
+
+impl From<std::io::Error> for BrowserError {
+    fn from(error: std::io::Error) -> Self {
+        BrowserError::NavigationError(error.to_string())
+    }
+}

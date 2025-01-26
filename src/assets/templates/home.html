@@ -1,10 +1,52 @@
 <div class="kawaii-container">
-    <div class="mascot" role="img" aria-label="Kawaii Browser-chan"></div>
-    <h1 class="welcome-text">Welcome to Kawaii Browser! (◕‿◕✿)</h1>
-    <input type="text" class="search-box" placeholder="Search with Browser-chan..." aria-label="Search">
-    <nav class="quick-links">
-        <a href="#favorites" class="kawaii-button">✨ Favorites</a>
-        <a href="#history" class="kawaii-button">🎀 History</a>
-        <a href="#extensions" class="kawaii-button">🌸 Extensions</a>
-    </nav>
+    <header class="profile-header">
+        <div class="mascot" role="img" aria-label="Kawaii Browser-chan"></div>
+        <h1 class="welcome-text">Welcome to Kawaii Browser! (◕‿◕✿)</h1>
+        <p class="subtitle">A cute and functional web browser written in Rust</p>
+    </header>
+
+    <main class="main-content">
+        <div class="search-section">
+            <input type="text" class="search-box" placeholder="Search with Browser-chan..." aria-label="Search">
+        </div>
+
+        <nav class="quick-links">
+            <h2>Quick Access</h2>
+            <div class="button-grid">
+                <a href="#favorites" class="kawaii-button">✨ Favorites</a>
+                <a href="#history" class="kawaii-button">🎀 History</a>
+                <a href="#extensions" class="kawaii-button">🌸 Extensions</a>
+                <a href="#settings" class="kawaii-button">⚙️ Settings</a>
+            </div>
+        </nav>
+
+        <section class="features">
+            <h2>Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <span class="emoji">🚀</span>
+                    <h3>Turbo Mode</h3>
+                    <p>Faster browsing experience</p>
+                </div>
+                <div class="feature-card">
+                    <span class="emoji">🔋</span>
+                    <h3>Battery Saver</h3>
+                    <p>Optimize for longer usage</p>
+                </div>
+                <div class="feature-card">
+                    <span class="emoji">🛡️</span>
+                    <h3>Ad Blocker</h3>
+                    <p>Clean browsing experience</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="kawaii-footer">
+        <p>Made with ♥ by kyuna312 (◕ᴗ◕✿)</p>
+        <div class="social-links">
+            <a href="https://github.com/kyuna312" class="social-link">GitHub</a>
+            <a href="https://kyuna-web.vercel.app" class="social-link">Website</a>
+        </div>
+    </footer>
 </div>

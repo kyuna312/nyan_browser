@@ -5,6 +5,7 @@ pub mod config;
 pub mod constants;
 pub mod core;
 pub mod features;
+pub mod monitoring;
 pub mod utils;
 
 // Re-export main types for convenience

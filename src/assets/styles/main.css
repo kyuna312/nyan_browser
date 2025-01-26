@@ -1,9 +1,10 @@
 :root {
     --primary-color: #e91e63;
     --secondary-color: #f48fb1;
-    --bg-gradient: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+    --bg-color: #fafafa;
+    --text-color: #333;
+    --card-bg: #ffffff;
     --shadow-color: rgba(0, 0, 0, 0.1);
-    --animation-duration: 3s;
 }
 
 * {
@@ -12,28 +13,138 @@
     box-sizing: border-box;
 }
 
+body {
+    background: var(--bg-color);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
 .kawaii-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: var(--bg-gradient);
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    padding: 20px;
-    will-change: transform;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 3rem;
 }
 
 .mascot {
-    width: 280px;
-    height: 280px;
-    background-image: url('../images/mascot.webp');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    transform: translateZ(0);
-    animation: float var(--animation-duration) ease-in-out infinite;
-    will-change: transform;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background-color: var(--card-bg);
+    box-shadow: 0 4px 12px var(--shadow-color);
 }
 
-/* Rest of the CSS from DEFAULT_PAGE and CUSTOM_HEADER */
+.welcome-text {
+    font-size: 2.5rem;
+    margin: 1rem 0;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    color: #666;
+    font-size: 1.2rem;
+}
+
+.search-section {
+    margin: 2rem 0;
+}
+
+.search-box {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    display: block;
+    padding: 1rem;
+    border: 2px solid var(--secondary-color);
+    border-radius: 25px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.search-box:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.2);
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.kawaii-button {
+    background: var(--card-bg);
+    padding: 1rem;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text-color);
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.kawaii-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.feature-card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.emoji {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.kawaii-footer {
+    text-align: center;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+}
+
+.social-links {
+    margin-top: 1rem;
+}
+
+.social-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin: 0 0.5rem;
+}
+
+.social-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .kawaii-container {
+        padding: 1rem;
+    }
+
+    .welcome-text {
+        font-size: 2rem;
+    }
+}

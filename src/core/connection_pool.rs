@@ -1,24 +1,36 @@
-use std::error::Error;
 use std::sync::Arc;
-use tokio::sync::Semaphore;
+use tokio::sync::{Semaphore, SemaphorePermit};
 
 pub struct ConnectionPool {
     semaphore: Arc<Semaphore>,
+    max_connections: usize,
 }
 
 impl ConnectionPool {
-    pub fn new(size: usize) -> Self {
+    pub fn new(max_connections: usize) -> Self {
         Self {
-            semaphore: Arc::new(Semaphore::new(size)),
+            semaphore: Arc::new(Semaphore::new(max_connections)),
+            max_connections,
         }
     }
 
-    pub async fn acquire(&self) -> Result<PooledConnection<'_>, Box<dyn Error>> {
-        let permit = self.semaphore.acquire().await?;
-        Ok(PooledConnection { _permit: permit })
+    pub async fn acquire(&self) -> PooledConnection {
+        let permit = self.semaphore.acquire().await.unwrap();
+        PooledConnection {
+            permit: Some(permit),
+            pool: self,
+        }
     }
 }
 
 pub struct PooledConnection<'a> {
-    _permit: tokio::sync::SemaphorePermit<'a>,
+    permit: Option<SemaphorePermit<'a>>,
+    pool: &'a ConnectionPool,
+}
+
+impl<'a> PooledConnection<'a> {
+    pub fn release(self) {
+        // Permit is automatically released when dropped
+        drop(self.permit);
+    }
 }

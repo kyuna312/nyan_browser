@@ -1,26 +1,22 @@
-use std::fs;
+use once_cell::sync::Lazy;
 use std::path::Path;
+use tokio::fs;
 
-pub fn load_templates() -> String {
-    let css = fs::read_to_string(
-        Path::new(env!("CARGO_MANIFEST_DIR")).join("src/assets/styles/main.css"),
-    )
-    .expect("Failed to load CSS");
+pub static DEFAULT_PAGE: Lazy<String> = Lazy::new(|| {
+    tokio::runtime::Runtime::new().unwrap().block_on(async {
+        let (css, html) = tokio::join!(
+            fs::read_to_string(
+                Path::new(env!("CARGO_MANIFEST_DIR")).join("src/assets/styles/main.css")
+            ),
+            fs::read_to_string(
+                Path::new(env!("CARGO_MANIFEST_DIR")).join("src/assets/templates/home.html")
+            )
+        );
 
-    let home_html = fs::read_to_string(
-        Path::new(env!("CARGO_MANIFEST_DIR")).join("src/assets/templates/home.html"),
-    )
-    .expect("Failed to load home template");
-
-    format!(
-        r#"
-        <style>{}</style>
-        {}
-        "#,
-        css, home_html
-    )
-}
-
-lazy_static::lazy_static! {
-    pub static ref DEFAULT_PAGE: String = load_templates();
-}
+        format!(
+            r#"<style>{}</style>{}"#,
+            css.expect("Failed to load CSS"),
+            html.expect("Failed to load HTML")
+        )
+    })
+});

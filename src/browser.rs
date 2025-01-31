@@ -331,6 +331,27 @@ impl NyanBrowser {
         self.battery_saver.enable();
         info!("🔋 Battery saver enabled!");
     }
+
+    pub async fn cleanup_memory(&self) -> anyhow::Result<()> {
+        // Clear old cache entries
+        self.cache.clear_old_entries().await?;
+
+        // Clear network request history
+        self.network.clear_old_requests().await?;
+
+        // Run garbage collection
+        self.client
+            .execute(
+                "window.gc && window.gc();
+                 if (window.performance && window.performance.memory) {
+                     window.performance.memory.gc();
+                 }",
+                vec![],
+            )
+            .await?;
+
+        Ok(())
+    }
 }
 
 impl Drop for NyanBrowser {

@@ -1,27 +1,40 @@
-use parking_lot::RwLock as ParkingRwLock;
+use parking_lot::RwLock;
 use serde::{Deserialize, Serialize};
+use std::collections::VecDeque;
 use std::sync::Arc;
 use tracing::info;
 
 pub struct NetworkMonitor {
-    requests: Arc<ParkingRwLock<Vec<RequestData>>>,
-    filters: Arc<ParkingRwLock<Vec<RequestFilter>>>,
+    requests: Arc<RwLock<VecDeque<RequestData>>>,
+    filters: Arc<RwLock<Vec<RequestFilter>>>,
+    max_requests: usize,
 }
 
 impl NetworkMonitor {
     pub fn new() -> Self {
         Self {
-            requests: Arc::new(ParkingRwLock::new(Vec::with_capacity(100))),
-            filters: Arc::new(ParkingRwLock::new(Vec::with_capacity(10))),
+            requests: Arc::new(RwLock::new(VecDeque::with_capacity(100))),
+            filters: Arc::new(RwLock::new(Vec::with_capacity(10))),
+            max_requests: 1000,
         }
     }
 
     pub async fn intercept_request(&self, request: RequestData) -> anyhow::Result<()> {
         let filters = self.filters.read();
         if filters.iter().any(|f| f.matches(&request)) {
-            self.requests.write().push(request);
+            let mut requests = self.requests.write();
+            if requests.len() >= self.max_requests {
+                requests.pop_front();
+            }
+            requests.push_back(request);
             info!("Request intercepted");
         }
+        Ok(())
+    }
+
+    pub async fn clear_old_requests(&self) -> anyhow::Result<()> {
+        let mut requests = self.requests.write();
+        requests.clear();
         Ok(())
     }
 }
